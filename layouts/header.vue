@@ -1,8 +1,8 @@
 <template>
-  <div >
-    <p :class="styles.container">WELCOME</p>
+  <div :class="styles.container">
+    <p :class="styles.headerContainer">WELCOME TO OUR STORE</p>
     <nuxt/>
-    <p :class="styles.container">Nice to meet you</p>
+    <p :class="styles.footerContainer">WELCOME</p>
   </div>
 </template>
 

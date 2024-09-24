@@ -11,7 +11,6 @@
       fill="#00DC82"
     />
   </svg>
-    <div v-for="item in books" :key="item.id">{{item.id}}: {{item.title}}</div>
 
     <NuxtLink to="/static">Home</NuxtLink>
   </div>

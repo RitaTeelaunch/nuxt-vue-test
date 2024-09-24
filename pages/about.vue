@@ -1,30 +1,36 @@
-<template >
-  <div>
-  <NuxtLogo/>
-  <div v-for="item in books" :key="item.id">{{item.id}}: {{item.title}}</div>
-  </div>
+<template>
+  <ProfileComponent
+    :full-name="users"
+    :load-users="fetchUsers"
+    :error-user="errorUser"
+    :loading-user="loadingUser"
+  />
 </template>
 <script lang="ts">
-import axios from 'axios'
-import NuxtLogo from '~/src/components/NuxtLogo.vue'
+import ProfileComponent from '~/src/components/profileComponent/ProfileComponent.vue'
+
 export default {
-  components:NuxtLogo,
-  async asyncData() {
-    try {
-      const { data } = await axios('https://jsonplaceholder.typicode.com/posts');
-      console.log('data', data)
-      return {
-        books: data,
-        loading: false,
-        error: null
-      };
-    } catch (error) {
-      return {
-        books: [],
-        loading: false,
-        error
-      };
-    }
+  components: { ProfileComponent },
+  // fetch data from ssr
+  async asyncData({ store }) {
+    await store.dispatch('users/fetchUsers')
   },
+  computed: {
+    users() {
+      return this.$store.getters['users/users']
+    },
+    loadingUser() {
+      return this.$store.getters['users/loadingUser']
+    },
+    errorUser() {
+      return this.$store.getters['users/errorUser']
+    },
+  },
+  methods:{
+    fetchUsers(){
+      console.log('fetch from client side')
+      return this.$store.dispatch('users/fetchUsers')
+    }
+  }
 }
 </script>

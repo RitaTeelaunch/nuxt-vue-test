@@ -1,47 +1,22 @@
 <template>
-  <div>
-<!--    <p>{{msg}}</p>-->
-
+  <div :style="{marginLeft:'50px'}">
     <div v-if="error">Error fetching data: {{ error.message }}</div>
-    <div v-else>Fetched Data: </div>
-<!--    <div v-if="loading">Loading...-->
-<!--      <p>Planet title : {{title}}</p>-->
-<!--      <p>Planet body : {{body}}</p>-->
-<!--    </div>-->
-<!--<div v-else>-->
-    <p>Planet Name:</p>
-    <div v-for="item in books" :key="item.id">{{item.id}}: {{item.title}}</div>
-
+    <div v-else>Planet Name:</div>
+    <p v-for="item in books" :key="item.id">- {{item.title}}</p>
+    <NuxtLink to="/" :style="{color:'cadetblue', display:'flex',justifyContent:'end', marginRight:'30px', marginTop:'50px'}">Return Home</NuxtLink>
 </div>
-<!--  </div>-->
 </template>
-
 <script lang="ts">
 import axios from 'axios'
-// import { onMounted, ref } from 'vue'
 
      export default {
-
-        // async setup() {
-       //   // Create a reactive ref for the message
-       //   const msg = ref('');
-       //
-       //   // `onMounted` lifecycle hook
-       //   onMounted(() => {
-       //     msg.value = 'Hello World';
-       //   });
-       //
-       //   // Return the reactive property for use in the template
-       //   return {
-       //     msg
-       //   };
-       // },
+  layout:'header',
        async asyncData() { // this for ssr
          try {
            const { data } = await axios('https://jsonplaceholder.typicode.com/posts');
            console.log('data', data)
            return {
-             books: data,
+             books: data.slice(0,6),
              loading: false,
              error: null
            };

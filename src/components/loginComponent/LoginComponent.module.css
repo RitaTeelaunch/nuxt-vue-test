@@ -1,0 +1,36 @@
+.title {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  text-align: center;
+  font-family: 'DMSans-Bold', sans-serif; /* Use 'DM Sans' as defined in @font-face */
+  font-weight: 700;
+  font-size: 40px;
+  color: cadetblue;
+}
+.loginContainer{
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.loginButton{
+  border: unset;
+  border-radius: 15px;
+  background-color: cadetblue;
+  color: papayawhip;
+}
+
+.loginButton:hover{
+  border: unset;
+  border-radius: 15px;
+  color: cadetblue;
+  background-color: papayawhip;
+}
+
+.loginButton:focus,
+.loginButton:active {
+  background-color: cadetblue; /* Ensure the color doesn't change on focus */
+  color: papayawhip;
+  outline: none; /* Remove focus outline */
+}

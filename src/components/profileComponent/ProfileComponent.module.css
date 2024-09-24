@@ -1,0 +1,40 @@
+.header{
+  font-family: "Roboto-Italic", serif;
+  font-size: 40px;
+  font-weight: 300;
+  color: cadetblue;
+}
+
+.tableDetails {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  font-family: "DMSans-Bold", serif;
+  font-size: 20px;
+}
+
+.buttonContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.showButton{
+  border: unset;
+  border-radius: 15px;
+  background-color: cadetblue;
+  color: papayawhip;
+  padding: 10px 20px 10px 20px;
+}
+
+.homeContainer {
+  display: flex;
+  align-items: end;
+}
+
+.home{
+  color: cadetblue;
+}
+
+
