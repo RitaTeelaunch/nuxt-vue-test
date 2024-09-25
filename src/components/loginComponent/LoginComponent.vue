@@ -1,5 +1,10 @@
 <template>
-  <a-modal v-model="isContentVisible" :footer="null" :closable="false">
+  <a-modal
+    v-model="isContentVisible"
+    :footer="null"
+    :closable="false"
+    class="customModal"
+  >
     <p :class="styles.title">{{ msg }}</p>
     <a-form layout="vertical" @submit="login">
       <a-form-item
@@ -9,13 +14,14 @@
         <a-input
           v-model="form.username"
           v-decorator="[
-                'userName',
-                {
-                  rules: [
-                    { required: true, message: 'Please input your username!' },
-                  ],
-                },
-              ]"
+            'userName',
+            {
+              rules: [
+                { required: true, message: 'Please input your username!' },
+              ],
+            },
+          ]"
+          class="customInput"
           placeholder="Username"
           name="username"
           @focus="userNameError.touched = true"
@@ -32,7 +38,8 @@
         :help="passwordError() || ''"
       >
         <a-input
-          v-model='form.password'
+          class="customInput"
+          v-model="form.password"
           type="password"
           placeholder="Password"
           name="password"
@@ -47,17 +54,11 @@
       </a-form-item>
       <a-form-item>
         <div :class="styles.loginContainer">
-          <a-button
-            type="primary"
-            :class="styles.loginButton"
-            @click="login"
-          >Login</a-button
+          <a-button type="primary" :class="styles.loginButton" @click="login"
+            >Login</a-button
           >
-          <a-button
-            type="primary"
-            :class="styles.loginButton"
-            @click="cancel"
-          >Cancel</a-button
+          <a-button type="primary" :class="styles.loginButton" @click="cancel"
+            >Cancel</a-button
           >
         </div>
       </a-form-item>
@@ -66,54 +67,46 @@
 </template>
 <script lang="ts">
 import styles from './LoginComponent.module.css?module'
-export default ({
-  name:'LoginComponent',
-  props:{
-    isContentVisible:{
-      type:Boolean,
-      required:true
+export default {
+  name: 'LoginComponent',
+  props: {
+    isContentVisible: {
+      type: Boolean,
+      required: true,
     },
-    msg:{
-      type:String,
-      required: true
+    msg: {
+      type: String,
+      required: true,
     },
-    login:{
-      type:Function,
-      required:true
-    },
-    cancel:{
-      type:Function,
-      required:true
-    },
-    userNameError:{
+    login: {
       type: Function,
-      required:true
+      required: true,
     },
-    passwordError:{
+    cancel: {
       type: Function,
-      required:true
+      required: true,
     },
-    form:{
-      type:Object as () => { username: string; password: string },
-      required:true
+    userNameError: {
+      type: Function,
+      required: true,
     },
-    touched:{
-      type:Object as () => { username: string; password: string },
-      required:true
+    passwordError: {
+      type: Function,
+      required: true,
+    },
+    form: {
+      type: Object as () => { username: string; password: string },
+      required: true,
+    },
+    touched: {
+      type: Object as () => { username: string; password: string },
+      required: true,
+    },
+  },
+  data() {
+    return {
+      styles,
     }
   },
-  onMounted(){
-    return{
-      isContentVisible,
-      msg,
-      login,
-      cancel,
-      userNameError,
-      passwordError,
-      form,
-      touched,
-      styles
-    }
-  }
-})
+}
 </script>

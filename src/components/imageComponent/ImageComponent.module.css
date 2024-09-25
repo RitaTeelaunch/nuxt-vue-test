@@ -116,6 +116,7 @@
   outline: none; /* Remove focus outline */
 }
 
+
 @media (max-width: 900px) {
   .img{
     max-width:300px;

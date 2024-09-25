@@ -7,11 +7,14 @@
   font-weight: 700;
   font-size: 40px;
   color: cadetblue;
+  animation: fadeIn 1s ease forwards;
 }
+
 .loginContainer{
   display: flex;
   justify-content: center;
   gap: 40px;
+  animation: fadeOut 1s ease forwards;
 }
 
 .loginButton{
@@ -34,3 +37,26 @@
   color: papayawhip;
   outline: none; /* Remove focus outline */
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px); /* Move it up slightly */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Back to normal position */
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px); /* Move it up slightly */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Back to normal position */
+  }
+}
+
+

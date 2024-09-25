@@ -21,6 +21,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/public/assets/fonts/fonts.css',
+    '@/public/assets/antd.module.css',
     'ant-design-vue/dist/antd.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -41,7 +42,9 @@ export default {
   modules: [],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['ant-design-vue'],
+  },
 
 
   // Enable SSR globally
@@ -50,5 +53,5 @@ export default {
   // apply the middleware globally
   serverMiddleware: ['~/server-middleware/logger'],
 
-  test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i
+  test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
 }

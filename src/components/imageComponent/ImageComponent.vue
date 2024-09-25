@@ -1,5 +1,6 @@
 <template>
   <div :class="styles.container">
+    <transition name="ImageComponent" mode="forwards"></transition>
     <p :class="styles.title">{{ title }}</p>
     <div :class="styles.description">
       <p :class="styles.preTitle">{{ section }}</p>
@@ -26,85 +27,21 @@
         @click="opelLoginModal"
         >User</a-button
       >
-<!--      <LoginComponent-->
-<!--        is-content-visible="isContentVisible"-->
-<!--        msg="msg"-->
-<!--        login="login"-->
-<!--        cancel="cancel"-->
-<!--        user-name-error="userNameError"-->
-<!--        password-error="passwordError"-->
-<!--        form="form"-->
-<!--        touched="touched"-->
-<!--      />-->
-      <a-modal v-model="isContentVisible" :footer="null" :closable="false">
-        <p :class="styles.title">{{ msg }}</p>
-        <a-form layout="vertical" @submit="login">
-          <a-form-item
-            :validate-status="userNameError() ? 'error' : ''"
-            :help="userNameError() || ''"
-          >
-            <a-input
-              v-model="form.username"
-              v-decorator="[
-                'userName',
-                {
-                  rules: [
-                    { required: true, message: 'Please input your username!' },
-                  ],
-                },
-              ]"
-              placeholder="Username"
-              name="username"
-              @focus="userNameError.touched = true"
-            >
-              <a-icon
-                slot="prefix"
-                type="user"
-                style="color: rgba(0, 0, 0, 0.25)"
-              />
-            </a-input>
-          </a-form-item>
-          <a-form-item
-            :validate-status="passwordError() ? 'error' : ''"
-            :help="passwordError() || ''"
-          >
-            <a-input
-              v-model="form.password"
-              type="password"
-              placeholder="Password"
-              name="password"
-              @focus="passwordError.touched = true"
-            >
-              <a-icon
-                slot="prefix"
-                type="lock"
-                style="color: rgba(0, 0, 0, 0.25)"
-              />
-            </a-input>
-          </a-form-item>
-          <a-form-item>
-            <div :class="styles.loginContainer">
-              <a-button
-                type="primary"
-                :class="styles.loginButton"
-                @click="login"
-              >Login</a-button
-              >
-              <a-button
-                type="primary"
-                :class="styles.loginButton"
-                @click="cancel"
-              >Cancel</a-button
-              >
-            </div>
-          </a-form-item>
-        </a-form>
-      </a-modal>
+      <LoginComponent
+        :is-content-visible="isContentVisible"
+        :msg="msg"
+        :login="login"
+        :cancel="cancel"
+        :user-name-error="userNameError"
+        :password-error="passwordError"
+        :form="form"
+        :touched="touched"
+      />
     </div>
   </div>
 </template>
 <script lang="ts">
-import { PropType, reactive, ref } from 'vue'
+import { PropType } from 'vue'
 import styles from './ImageComponent.module.css?module'
 import FirstImage from '~/public/assets/Receiver.png'
 import SecondImage from '~/public/assets/Receiver.svg'
@@ -112,7 +49,11 @@ import { ImageComponentType } from '~/src/components/imageComponent/ImageCompone
 import LoginComponent from '~/src/components/loginComponent/LoginComponent.vue'
 export default {
   name: 'ImageComponent', // component name
-  // components: { LoginComponent },
+  components: { LoginComponent },
+  transition:{
+    name:'ImageComponent',
+    mode:'forwards',
+  },
   props: {
     title: {
       type: String as PropType<ImageComponentType['title']>,
@@ -127,67 +68,100 @@ export default {
       required: true,
     },
     returnAbout: { type: Function, required: true },
+    opelLoginModal:{type:Function, required:true},
+    isContentVisible:{
+      type:Boolean,
+      required:true
+    },
+    msg:{
+      type:String,
+      required: true
+    },
+    login:{
+      type:Function,
+      required:true
+    },
+    cancel:{
+      type:Function,
+      required:true
+    },
+    userNameError:{
+      type: Function,
+      required:true
+    },
+    passwordError:{
+      type: Function,
+      required:true
+    },
+    form:{
+      type:Object as () => { username: string; password: string },
+      required:true
+    },
+    touched:{
+      type:Object as () => { username: string; password: string },
+      required:true
+    }
   },
   setup() {
-    // Define refs for message and visibility state
-    const isContentVisible = ref(false)
-    const msg = ref('')
-    // Form data
-    const form = reactive({
-      username: '',
-      password: '',
-    })
-    // Track if the fields have been touched (focused)
-    const touched = reactive({
-      username: false,
-      password: false,
-    })
-
-    const opelLoginModal = () => {
-      msg.value = 'Login Form'
-      isContentVisible.value = !isContentVisible.value
-      form.username = ''
-      form.password = ''
-      touched.username = false // Reset touched state
-      touched.password = false
-    }
-
-    const login = () => {
-      if (form.username && form.password) {
-        console.log('Login successful with:', form.username)
-        isContentVisible.value = false
-      } else {
-        console.log('Please enter valid credentials')
-      }
-    }
-    const cancel = () => {
-      isContentVisible.value = false
-    }
-
-    // Simple validation error functions-Validation logic
-    const userNameError = () =>
-      touched.username && form.username === ''
-        ? 'Please input your username!'
-        : ''
-
-    const passwordError = () =>
-      touched.password && form.password === ''
-        ? 'Please input your password!'
-        : ''
+    // // Define refs for message and visibility state
+    // const isContentVisible = ref(false)
+    // const msg = ref('')
+    // // Form data
+    // const form = reactive({
+    //   username: '',
+    //   password: '',
+    // })
+    // // Track if the fields have been touched (focused)
+    // const touched = reactive({
+    //   username: false,
+    //   password: false,
+    // })
+    //
+    // const opelLoginModal = () => {
+    //   msg.value = 'Login Form'
+    //   isContentVisible.value = !isContentVisible.value
+    //   form.username = ''
+    //   form.password = ''
+    //   touched.username = false // Reset touched state
+    //   touched.password = false
+    // }
+    //
+    // const login = () => {
+    //   if (form.username && form.password) {
+    //     console.log('Login successful with:', form.username)
+    //     isContentVisible.value = false
+    //   } else {
+    //     console.log('Please enter valid credentials')
+    //   }
+    // }
+    // const cancel = () => {
+    //   isContentVisible.value = false
+    // }
+    //
+    // // Simple validation error functions-Validation logic
+    // const userNameError = () =>
+    //   touched.username && form.username === ''
+    //     ? 'Please input your username!'
+    //     : ''
+    //
+    // const passwordError = () =>
+    //   touched.password && form.password === ''
+    //     ? 'Please input your password!'
+    //     : ''
 
     return {
       FirstImage,
       SecondImage,
       styles,
-      isContentVisible,
-      msg,
-      opelLoginModal,
-      login,
-      cancel,
-      userNameError,
-      passwordError,
-      form,
-      touched,
+      // isContentVisible,
+      // msg,
+      // opelLoginModal,
+      // login,
+      // cancel,
+      // userNameError,
+      // passwordError,
+      // form,
+      // touched,
     }
   },
 }

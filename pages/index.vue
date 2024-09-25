@@ -1,23 +1,25 @@
 <template>
   <div>
-    <!--    <ProfileComponent :full-name="users"  :load-users="loadUsers"  :error-user="errorUser" :loading-user="loadingUser"/>-->
-    <!--    <button @click="loadItems">Fetch Items</button>-->
-    <!--    <div v-if="loading">Loading...</div>-->
-    <!--    <div v-if="error">{{ error }}</div>-->
-    <!--    <ul v-if="!loading && !error">-->
-    <!--      <li v-for="object in item" :key="object.id">{{ object.title }}</li>-->
-    <!--    </ul>-->
     <ImageComponent
       title="Shopping Website"
       section="Bag Section"
       description="Customized your own bag design!!!!"
       :return-about="returnAbout"
+      :opel-login-modal="opelLoginModal"
+      :is-content-visible="isContentVisible"
+      :msg="msg"
+      :login="login"
+      :cancel="cancel"
+      :user-name-error="userNameError"
+      :password-error="passwordError"
+      :form="form"
+      :touched="touched"
     />
   </div>
 </template>
 
 <script lang="ts">
-
+import { reactive, ref } from 'vue'
 import ImageComponent from '~/src/components/imageComponent/ImageComponent.vue'
 
 export default {
@@ -26,11 +28,69 @@ export default {
     ImageComponent,
   },
   layout: 'header',
-    methods: {
-      returnAbout() {
-        this.$router.push('/about')
+  setup() {
+    // Define refs for message and visibility state
+    const isContentVisible = ref(false)
+    const msg = ref('')
+    // Form data
+    const form = reactive({
+      username: '',
+      password: '',
+    })
+    // Track if the fields have been touched (focused)
+    const touched = reactive({
+      username: false,
+      password: false,
+    })
+
+    const opelLoginModal = () => {
+      msg.value = 'Login Form'
+      isContentVisible.value = !isContentVisible.value
+      form.username = ''
+      form.password = ''
+      touched.username = false // Reset touched state
+      touched.password = false
+    }
+
+    const login = () => {
+      if (form.username && form.password) {
+        console.log('Login successful with:', form.username)
+        isContentVisible.value = false
+      } else {
+        console.log('Please enter valid credentials')
       }
     }
+    const cancel = () => {
+      isContentVisible.value = false
+    }
+
+    // Simple validation error functions-Validation logic
+    const userNameError = () =>
+      touched.username && form.username === ''
+        ? 'Please input your username!'
+        : ''
+
+    const passwordError = () =>
+      touched.password && form.password === ''
+        ? 'Please input your password!'
+        : ''
+    return {
+      isContentVisible,
+      msg,
+      form,
+      touched,
+      opelLoginModal,
+      login,
+      cancel,
+      userNameError,
+      passwordError,
+    }
+  },
+  methods: {
+    returnAbout() {
+      this.$router.push('/about')
+    },
+  },
   // },
   // // async asyncData() { //ssr without using the store
   // //   try {
