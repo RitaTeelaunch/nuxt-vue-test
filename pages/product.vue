@@ -22,7 +22,7 @@ export default {
     },
   },
   // methods: {
-  //   fetchProduct() {
+  //   fetchProduct() { //for client side
   //     return this.$store.dispatch('products/fetchProduct')
   //   },
   // },

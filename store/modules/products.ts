@@ -17,7 +17,6 @@ const mutations = {
   },
 }
 const actions = {
-
   async fetchProduct({ commit }) {
     commit('SET_LOADING_PRODUCT', true)
     try {
@@ -31,18 +30,17 @@ const actions = {
       )
       console.log('data', data.results.books)
       commit('SET_PRODUCTS', data.results.books)
-
     } catch (error) {
       commit('SET_ERROR_PRODUCT', error.message)
-    }finally {
-      commit('SET_LOADING_PRODUCT',false)
+    } finally {
+      commit('SET_LOADING_PRODUCT', false)
     }
   },
 }
 const getters = {
-  products: (state)=>state.products,
-  loadingProduct: (state)=>state.loadingProduct,
-    errorProduct:(state)=>state.errorProduct
+  products: (state) => state.products,
+  loadingProduct: (state) => state.loadingProduct,
+  errorProduct: (state) => state.errorProduct,
 }
 
 export default {

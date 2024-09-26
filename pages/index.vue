@@ -1,5 +1,4 @@
 <template>
-  <div>
     <ImageComponent
       title="Shopping Website"
       section="Bag Section"
@@ -15,7 +14,6 @@
       :form="form"
       :touched="touched"
     />
-  </div>
 </template>
 
 <script lang="ts">

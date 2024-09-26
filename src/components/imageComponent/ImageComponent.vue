@@ -1,14 +1,28 @@
 <template>
   <div :class="styles.container">
-    <transition name="ImageComponent" mode="forwards"></transition>
+    <div :class="styles.animated"  >
+      <transition
+        :enter-active-class="styles.fadeEnterActive"
+        :enter-class="styles.fadeLeaveActive"
+        :leave-active-class="styles.fadeEnterActive"
+        :leave-to-class="styles.fadeLeaveActive"
+      >
+      <div v-if="isAnimated" :class="styles.subContainer">
     <p :class="styles.title">{{ title }}</p>
     <div :class="styles.description">
       <p :class="styles.preTitle">{{ section }}</p>
-      <p :class="styles.subTitle">{{ description }}</p>
+      <p :class="styles.preTitle">{{ description }}</p>
     </div>
-    <div :class="styles.imgContainer">
+    </div>
+    </transition>
+    </div>
+    <div style="min-height: 400px">
+    <transition :enter-active-class="styles.imageEnterActive" :enter-class="styles.imageLeaveActive">
+    <div v-if="isAnimated" :class="styles.imgContainer">
       <img :src="FirstImage" :alt="FirstImage" :class="styles.img" />
       <img :src="SecondImage" :alt="SecondImage" :class="styles.img" />
+    </div>
+    </transition>
     </div>
     <div :class="styles.buttonContainer">
       <NuxtLink to="/product" :class="styles.product">About Product</NuxtLink>
@@ -41,7 +55,7 @@
   </div>
 </template>
 <script lang="ts">
-import { PropType } from 'vue'
+import {  onMounted, PropType, ref } from 'vue'
 import styles from './ImageComponent.module.css?module'
 import FirstImage from '~/public/assets/Receiver.png'
 import SecondImage from '~/public/assets/Receiver.svg'
@@ -50,10 +64,6 @@ import LoginComponent from '~/src/components/loginComponent/LoginComponent.vue'
 export default {
   name: 'ImageComponent', // component name
   components: { LoginComponent },
-  transition:{
-    name:'ImageComponent',
-    mode:'forwards',
-  },
   props: {
     title: {
       type: String as PropType<ImageComponentType['title']>,
@@ -103,66 +113,18 @@ export default {
     }
   },
   setup() {
-    // // Define refs for message and visibility state
-    // const isContentVisible = ref(false)
-    // const msg = ref('')
-    // // Form data
-    // const form = reactive({
-    //   username: '',
-    //   password: '',
-    // })
-    // // Track if the fields have been touched (focused)
-    // const touched = reactive({
-    //   username: false,
-    //   password: false,
-    // })
-    //
-    // const opelLoginModal = () => {
-    //   msg.value = 'Login Form'
-    //   isContentVisible.value = !isContentVisible.value
-    //   form.username = ''
-    //   form.password = ''
-    //   touched.username = false // Reset touched state
-    //   touched.password = false
-    // }
-    //
-    // const login = () => {
-    //   if (form.username && form.password) {
-    //     console.log('Login successful with:', form.username)
-    //     isContentVisible.value = false
-    //   } else {
-    //     console.log('Please enter valid credentials')
-    //   }
-    // }
-    // const cancel = () => {
-    //   isContentVisible.value = false
-    // }
-    //
-    // // Simple validation error functions-Validation logic
-    // const userNameError = () =>
-    //   touched.username && form.username === ''
-    //     ? 'Please input your username!'
-    //     : ''
-    //
-    // const passwordError = () =>
-    //   touched.password && form.password === ''
-    //     ? 'Please input your password!'
-    //     : ''
+    const isAnimated = ref(false);
+    onMounted(() => {
+        isAnimated.value = !isAnimated.value;
+    });
 
     return {
       FirstImage,
       SecondImage,
       styles,
-      // isContentVisible,
-      // msg,
-      // opelLoginModal,
-      // login,
-      // cancel,
-      // userNameError,
-      // passwordError,
-      // form,
-      // touched,
+      isAnimated,
     }
   },
 }
 </script>
+
