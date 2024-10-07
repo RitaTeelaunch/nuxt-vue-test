@@ -1,84 +1,69 @@
 <template>
-  <a-modal
-    v-model="isContentVisible"
-    :footer="null"
-    :closable="false"
-    class="customModal"
-  >
-    <p :class="styles.title" >{{ msg }}</p>
-    <p  @click="click">click to show content</p>
-    <transition name="fade" mode="in-out">
+  <a-modal :open="isContentVisible" :footer="null" :closable="false" class="customModal">
+    <p :class="styles.title">{{ msg }}</p>
+    <p :class="styles.title" @click="click">click to show content</p>
+    <transition name="image" mode="in-out">
       <div v-if="isAnimated">
-      <a-form  layout="vertical" @submit="login">
-
+        <a-form :model="localForm" layout="vertical" :required-mark="false" @finish="login" @finish-failed="cancel">
           <a-form-item
-          :validate-status="userNameError() ? 'error' : ''"
-          :help="userNameError() || ''"
-        >
-          <a-input
-            v-model="form.username"
-            v-decorator="[
-              'userName',
-              {
-                rules: [
-                  { required: true, message: 'Please input your username!' },
-                ],
-              },
-            ]"
             class="customInput"
-            placeholder="Username"
             name="username"
-            @focus="userNameError.touched = true"
+            :rules="[{ required: true, message: 'Please input your username!' }]"
           >
-            <a-icon
-              slot="prefix"
-              type="user"
-              style="color: rgba(0, 0, 0, 0.25)"
-            />
-          </a-input>
-        </a-form-item>
-        <a-form-item
-          :validate-status="passwordError() ? 'error' : ''"
-          :help="passwordError() || ''"
-        >
-          <a-input
+            <template #label>
+              <p :class="styles.label">Username</p>
+            </template>
+            <a-input v-model:value="localForm.username" placeholder="Username" name="username" class="inputContent">
+              <template #prefix><UserOutlined style="color: rgba(0, 0, 0, 0.25)" /></template>
+            </a-input>
+          </a-form-item>
+          <a-form-item
             class="customInput"
-            v-model="form.password"
-            type="password"
-            placeholder="Password"
             name="password"
-            @focus="passwordError.touched = true"
+            :rules="[{ required: true, message: 'Please input your password!' }]"
           >
-            <a-icon
-              slot="prefix"
-              type="lock"
-              style="color: rgba(0, 0, 0, 0.25)"
-            />
-          </a-input>
-        </a-form-item>
+            <template #label>
+              <p :class="styles.label">Password</p>
+            </template>
+            <a-input-password
+              v-model:value="localForm.password"
+              type="password"
+              placeholder="Password"
+              name="password"
+              class="eyePassword"
+            >
+              <template #prefix><LockOutlined style="color: rgba(0, 0, 0, 0.25)" /></template>
+            </a-input-password>
+          </a-form-item>
 
-        <a-form-item>
-          <div :class="styles.loginContainer">
-            <a-button type="primary" :class="styles.loginButton" @click="login"
-              >Login</a-button
-            >
-            <a-button type="primary" :class="styles.loginButton" @click="cancel"
-              >Cancel</a-button
-            >
-          </div>
-        </a-form-item>
-      </a-form>
+          <a-form-item>
+            <div :class="styles.loginContainer">
+              <a-button
+                type="primary"
+                html-type="submit"
+                :class="styles.loginButton"
+                :disabled="!localForm.username || !localForm.password"
+                @click="login"
+                >Login</a-button
+              >
+              <a-button type="primary" :class="styles.loginButton" @click="cancel">Cancel</a-button>
+            </div>
+          </a-form-item>
+        </a-form>
       </div>
     </transition>
   </a-modal>
-
-
 </template>
 <script lang="ts">
-import { ref } from 'vue'
 import styles from './LoginComponent.module.css?module'
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
+import { ref } from 'vue'
 export default {
   name: 'LoginComponent',
+  components: {
+    UserOutlined,
+    LockOutlined,
+  },
   props: {
     isContentVisible: {
       type: Boolean,
@@ -96,43 +81,19 @@ export default {
       type: Function,
       required: true,
     },
-    userNameError: {
-      type: Function,
-      required: true,
-    },
-    passwordError: {
-      type: Function,
-      required: true,
-    },
     form: {
       type: Object as () => { username: string; password: string },
       required: true,
     },
-    touched: {
-      type: Object as () => { username: string; password: string },
-      required: true,
-    },
   },
-  setup() {
+  setup(props) {
     const isAnimated = ref(false)
-      function click() {
-        isAnimated.value = !isAnimated.value
-      }
-    return { isAnimated, click,styles }
+    const localForm = ref({ ...props.form }) // Create a local copy of the form
+    function click() {
+      isAnimated.value = !isAnimated.value
+    }
+
+    return { isAnimated, click, styles, localForm }
   },
 }
 </script>
-<style scoped>
-.fade-enter-active, .fade-leave-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 0.5s, transform 0.5s ease-in-out;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-  transform: translateX(20px);
-  transition: opacity 0.5s, transform 0.5s ease-in-out;
-}
-
-
-</style>

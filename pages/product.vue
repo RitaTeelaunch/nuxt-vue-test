@@ -1,30 +1,24 @@
 <template>
-  <ProductComponent :product-list="product"/>
+  <ProductComponent :product-list="products" />
 </template>
+
 <script lang="ts">
-import ProductComponent from '~/src/components/productComponent/ProductComponent.vue'
+import { useAsyncData } from 'nuxt/app'
+import ProductComponent from '../src/components/productComponent/ProductComponent.vue'
+import { useProductsStore } from '~/server/api/products'
 
 export default {
   components: { ProductComponent },
-  layout:'header',
-  async asyncData({ store }) {
-    await store.dispatch('products/fetchProduct')
+  async setup() {
+    const productsStore = useProductsStore()
+
+    const { data: products } = await useAsyncData('products', async () => {
+      await productsStore.fetchProduct()
+      return productsStore.products
+    })
+    return {
+      products: products || [],
+    }
   },
-  computed: {
-    product() {
-      return this.$store.getters['products/products']
-    },
-    loadingProduct() {
-      return this.$store.getters['products/loadingProduct']
-    },
-    errorProduct() {
-      return this.$store.getters['products/errorProduct']
-    },
-  },
-  // methods: {
-  //   fetchProduct() { //for client side
-  //     return this.$store.dispatch('products/fetchProduct')
-  //   },
-  // },
 }
 </script>

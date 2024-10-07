@@ -1,48 +1,68 @@
-.container{
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.headerContainer{
+.headerContainer {
   align-self: center;
-  font-family:'DMSans-Bold', serif;
+  font-family: 'DMSans-Bold', serif;
   font-size: 50px;
-  font-weight:700;
+  font-weight: 700;
   color: lightslategrey;
 }
 
-.footerContainer{
+.footerContainer {
   align-self: end;
-  font-family:'DMSans-Bold', serif;
+  font-family: 'DMSans-Bold', serif;
   font-size: 50px;
-  font-weight:700;
+  font-weight: 700;
+  color: lightslategrey;
+}
+
+.store {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  font-family: Roboto-Italic, sans-serif;
+  font-size: 50px;
+  font-weight: 700;
   color: lightslategrey;
 }
 
 @media (max-width: 900px) {
-  .footerContainer{
+  .footerContainer {
     font-size: 30px;
   }
-  .headerContainer{
+  .headerContainer {
+    font-size: 30px;
+  }
+  .store {
     font-size: 30px;
   }
 }
 
 @media (max-width: 550px) {
-  .footerContainer{
+  .footerContainer {
     font-size: 20px;
   }
-  .headerContainer{
+  .headerContainer {
+    font-size: 20px;
+  }
+  .store {
     font-size: 20px;
   }
 }
 
 @media (max-width: 350px) {
-  .footerContainer{
+  .footerContainer {
     font-size: 15px;
   }
-  .headerContainer{
+  .headerContainer {
+    font-size: 15px;
+  }
+  .store {
     font-size: 15px;
   }
 }

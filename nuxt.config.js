@@ -1,33 +1,44 @@
-export default {
+export default defineNuxtConfig({
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'static',
-  // target: 'public',
+  target: 'public',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
-  head: {
-    title: 'nuxt-vue-test',
-    htmlAttrs: {
-      lang: 'en',
+  app: {
+    head: {
+      title: 'nuxt-vue-test',
+      htmlAttrs: {
+        lang: 'en',
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: '' },
+        { name: 'format-detection', content: 'telephone=no' },
+      ],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
-    ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ],
+    pageTransition: {
+      name: 'fade-slide',
+      mode: 'out-in',
+    },
+    layoutTransition: {
+      name: 'layout-slide',
+      mode: 'out-in',
+    },
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['@/public/assets/fonts/fonts.css',
-    '@/public/assets/antd.module.css',
-    'ant-design-vue/dist/antd.css'],
-
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '@/plugins/antd-ui'
+  plugins: ['~/plugins/antd.ts', '~/plugins/error-handler.ts'],
+
+  // Global CSS: https://go.nuxtjs.dev/config-css
+  css: [
+    '@/public/assets/fonts/fonts.css', // to import font
+    '@/public/assets/transition/main.css', // for transition
+    '@/public/assets/styles/antd.css', // for override antd
   ],
+
+  // Build Configuration: https://go.nuxtjs.dev/config-build
+  build: {},
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -39,19 +50,28 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['@nuxt/eslint', '@pinia/nuxt'],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-    transpile: ['ant-design-vue'],
+  // for prettier
+  eslint: {
+    config: {
+      stylistic: true,
+      checker: {
+        configType: 'eslint.config',
+      },
+    },
   },
-
 
   // Enable SSR globally
   ssr: true,
 
-  // apply the middleware globally
-  serverMiddleware: ['~/server-middleware/logger'],
+  pages: true,
 
-  test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
-}
+  devtools: { enabled: true },
+
+  router: {
+    middleware: ['logger'],
+  },
+
+  compatibilityDate: '2024-09-27',
+})

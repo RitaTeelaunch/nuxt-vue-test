@@ -1,5 +1,5 @@
-.header{
-  font-family: "Roboto-Italic", serif;
+.header {
+  font-family: 'Roboto-Italic', serif;
   font-size: 40px;
   font-weight: 300;
   color: cadetblue;
@@ -7,20 +7,20 @@
 
 .tableDetails {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr;
-  justify-content: center;
-  align-items: center;
-  font-family: "DMSans-Bold", serif;
+  grid-template-columns: repeat(5, 1fr);
+  justify-content: space-between;
+  align-items: start;
+  font-family: 'DMSans-Bold', serif;
   font-size: 20px;
 }
 
-.buttonContainer{
+.buttonContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
-.showButton{
+.showButton {
   border: unset;
   border-radius: 15px;
   background-color: cadetblue;
@@ -33,8 +33,6 @@
   align-items: end;
 }
 
-.home{
+.home {
   color: cadetblue;
 }
-
-

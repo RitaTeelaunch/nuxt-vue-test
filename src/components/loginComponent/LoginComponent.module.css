@@ -10,25 +10,35 @@
   animation: fadeIn 1s ease forwards;
 }
 
-.loginContainer{
+.label {
+  font-family: 'DMSans-Regular', sans-serif; /* Use 'DM Sans' as defined in @font-face */
+  font-weight: 300;
+  font-size: 20px;
+  color: rgba(119, 136, 153, 0.9);
+  margin-top: -20px;
+  margin-bottom: -20px;
+}
+
+.loginContainer {
   display: flex;
   justify-content: center;
   gap: 40px;
   animation: fadeOut 1s ease forwards;
+  margin-top: 20px;
 }
 
-.loginButton{
+.loginButton {
   border: unset;
   border-radius: 15px;
   background-color: cadetblue;
   color: papayawhip;
 }
 
-.loginButton:hover{
+.loginButton:hover {
   border: unset;
   border-radius: 15px;
-  color: cadetblue;
-  background-color: papayawhip;
+  color: cadetblue !important;
+  background-color: papayawhip !important;
 }
 
 .loginButton:focus,
@@ -58,5 +68,3 @@
     transform: translateY(0); /* Back to normal position */
   }
 }
-
-

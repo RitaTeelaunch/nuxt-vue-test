@@ -4,51 +4,53 @@
       <transition name="fade" mode="in-out">
         <ProfileComponent
           v-if="showProfileComponent"
-          :key="users.length"
           :full-name="users"
+          :load-users="fetchUsers"
           :error-user="errorUser"
           :loading-user="loadingUser"
           :show-info="showInfo"
         />
       </transition>
     </div>
-    <a-button class="button" @click="toggleProfileComponent">Refresh Profile</a-button>
+    <a-button class="button" @click="toggleProfileComponent"> Refresh Profile </a-button>
   </div>
 </template>
 
 <script lang="ts">
+import { useAsyncData } from 'nuxt/app'
 import { ref } from 'vue'
-import { useRouter } from 'nuxt/app'
-import ProfileComponent from '../src/components/profileComponent/ProfileComponent.vue'
-import { useUsersStore } from '~/server/api/users'
 
+import ProfileComponent from '../src/components/profileComponent/ProfileComponent.vue'
+import { useUsersStore } from '~/server/api/rita'
+
+// Import the server
 export default {
   name: 'AboutScreen',
   components: { ProfileComponent },
-
   async setup() {
-    definePageMeta({
-      layout: 'about',
-      pageTransition: 'image',
-    })
     const showProfileComponent = ref(true) // Control the rendering of ProfileComponent
-
     function toggleProfileComponent() {
       showProfileComponent.value = !showProfileComponent.value
     }
 
-    const router = useRouter()
-    const usersStore = useUsersStore()
-    await usersStore.fetchUsers()
+    const usersStore = useUsersStore() // Use the server
+
+    // Using useAsyncData with fetchUsers action from the Pinia server
+    await useAsyncData('users', async () => {
+      await usersStore.fetchUsers() // Call the action to fetch users
+      return usersStore.users // Return the users data from the server
+    })
 
     const showInfo = (id: number) => {
+      console.log('id', id)
       router.push(`/user/${id}`)
     }
 
     return {
       showProfileComponent,
       toggleProfileComponent,
-      users: usersStore.usersApp || [],
+      users: usersStore.users,
+      fetchUsers: usersStore.fetchUsers,
       loadingUser: usersStore.loadingUser,
       errorUser: usersStore.errorUser,
       showInfo,
@@ -56,3 +58,13 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.button {
+  border-radius: 15px;
+  background-color: cadetblue;
+  color: papayawhip;
+  padding: 0 22px;
+  border: unset;
+}
+</style>

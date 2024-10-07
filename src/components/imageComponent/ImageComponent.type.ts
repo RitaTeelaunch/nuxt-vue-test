@@ -1,7 +1,5 @@
-export interface ImageComponentType{
-  title:string;
-  section:string;
-  description:string;
+export interface ImageComponentType {
+  title: string
+  section: string
+  description: string
 }
-
-

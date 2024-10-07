@@ -1,35 +1,36 @@
 <template>
   <div :class="styles.container">
-    <div :class="styles.animated"  >
-      <transition
-        :enter-active-class="styles.fadeEnterActive"
-        :enter-class="styles.fadeLeaveActive"
-        :leave-active-class="styles.fadeEnterActive"
-        :leave-to-class="styles.fadeLeaveActive"
-      >
-      <div v-if="isAnimated" :class="styles.subContainer">
-    <p :class="styles.title">{{ title }}</p>
-    <div :class="styles.description">
-      <p :class="styles.preTitle">{{ section }}</p>
-      <p :class="styles.preTitle">{{ description }}</p>
+    <div :class="styles.animated">
+      <transition name="image" mode="in-out">
+        <div v-if="isAnimated" :class="styles.subContainer">
+          <p :class="styles.title">
+            {{ title }}
+          </p>
+          <div :class="styles.description">
+            <p :class="styles.preTitle">
+              {{ section }}
+            </p>
+            <p :class="styles.preTitle">
+              {{ description }}
+            </p>
+          </div>
+        </div>
+      </transition>
     </div>
-    </div>
-    </transition>
-    </div>
-    <div style="min-height: 400px">
-    <transition :enter-active-class="styles.imageEnterActive" :enter-class="styles.imageLeaveActive">
-    <div v-if="isAnimated" :class="styles.imgContainer">
-      <img :src="FirstImage" :alt="FirstImage" :class="styles.img" />
-      <img :src="SecondImage" :alt="SecondImage" :class="styles.img" />
-    </div>
-    </transition>
+    <div>
+      <transition name="image">
+        <div v-if="isAnimated" :class="styles.imgContainer">
+          <div :class="styles.imgContainer">
+            <a-image :src="FirstImage" :alt="FirstImage" :class="styles.img" />
+            <img :src="SecondImage" :alt="SecondImage" :class="styles.img" >
+          </div>
+        </div>
+      </transition>
     </div>
     <div :class="styles.buttonContainer">
-      <NuxtLink to="/product" :class="styles.product">About Product</NuxtLink>
-      <NuxtLink to="/planet" :class="styles.product">About Planet</NuxtLink>
-      <a-button type="link" :class="styles.aboutButton" @click="returnAbout">
-        About us
-      </a-button>
+      <NuxtLink to="/product" :class="styles.product"> About Product </NuxtLink>
+      <NuxtLink to="/planet" :class="styles.product"> About Planet </NuxtLink>
+      <a-button type="link" :class="styles.aboutButton" @click="returnAbout"> About us </a-button>
     </div>
     <div :class="styles.user">
       <a-button
@@ -39,28 +40,23 @@
         icon="user"
         :class="styles.aboutButton"
         @click="opelLoginModal"
-        >User</a-button
       >
-      <LoginComponent
-        :is-content-visible="isContentVisible"
-        :msg="msg"
-        :login="login"
-        :cancel="cancel"
-        :user-name-error="userNameError"
-        :password-error="passwordError"
-        :form="form"
-        :touched="touched"
-      />
+        User
+      </a-button>
+      <LoginComponent :is-content-visible="isContentVisible" :msg="msg" :login="login" :cancel="cancel" :form="form" />
     </div>
   </div>
 </template>
+
 <script lang="ts">
-import {  onMounted, PropType, ref } from 'vue'
+import type { PropType } from 'vue'
+import { onMounted, ref } from 'vue'
 import styles from './ImageComponent.module.css?module'
 import FirstImage from '~/public/assets/Receiver.png'
 import SecondImage from '~/public/assets/Receiver.svg'
-import { ImageComponentType } from '~/src/components/imageComponent/ImageComponent.type'
+import type { ImageComponentType } from '~/src/components/imageComponent/ImageComponent.type'
 import LoginComponent from '~/src/components/loginComponent/LoginComponent.vue'
+
 export default {
   name: 'ImageComponent', // component name
   components: { LoginComponent },
@@ -78,45 +74,47 @@ export default {
       required: true,
     },
     returnAbout: { type: Function, required: true },
-    opelLoginModal:{type:Function, required:true},
-    isContentVisible:{
-      type:Boolean,
-      required:true
+    opelLoginModal: { type: Function, required: true },
+    isContentVisible: {
+      type: Boolean,
+      required: true,
     },
-    msg:{
-      type:String,
-      required: true
+    msg: {
+      type: String,
+      required: true,
     },
-    login:{
-      type:Function,
-      required:true
-    },
-    cancel:{
-      type:Function,
-      required:true
-    },
-    userNameError:{
+    login: {
       type: Function,
-      required:true
+      required: true,
     },
-    passwordError:{
+    cancel: {
       type: Function,
-      required:true
+      required: true,
     },
-    form:{
-      type:Object as () => { username: string; password: string },
-      required:true
+    form: {
+      type: Object as () => { username: string; password: string },
+      required: true,
     },
-    touched:{
-      type:Object as () => { username: string; password: string },
-      required:true
-    }
   },
   setup() {
-    const isAnimated = ref(false);
+    // definePageMeta({
+    //   pageTransition: {
+    //     name: 'image',
+    //     mode: 'out-in',
+    //   },
+    // })
+    // is a compiler-hint helper that is only usable inside the script block of a single file component which is also a page
+    // definePageMeta({
+    //   pageTransition: {
+    //     name: 'fade-slide',
+    //     mode: 'in-out',
+    //   },
+    // })
+
+    const isAnimated = ref(false)
     onMounted(() => {
-        isAnimated.value = !isAnimated.value;
-    });
+      isAnimated.value = !isAnimated.value
+    })
 
     return {
       FirstImage,
@@ -127,4 +125,3 @@ export default {
   },
 }
 </script>
-
