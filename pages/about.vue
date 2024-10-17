@@ -4,7 +4,6 @@
       <transition name="fade" mode="in-out">
         <ProfileComponent
           v-if="showProfileComponent"
-          :key="users.length"
           :full-name="users"
           :error-user="errorUser"
           :loading-user="loadingUser"
@@ -12,7 +11,7 @@
         />
       </transition>
     </div>
-    <a-button class="button" @click="toggleProfileComponent">Refresh Profile</a-button>
+    <a-button class="button" data-testid="antdButton" @click="toggleProfileComponent">Refresh Profile</a-button>
   </div>
 </template>
 
@@ -20,17 +19,18 @@
 import { ref } from 'vue'
 import { useRouter } from 'nuxt/app'
 import ProfileComponent from '../src/components/profileComponent/ProfileComponent.vue'
-import { useUsersStore } from '~/server/api/users'
+import { useUsersStore } from '~/store/api/users'
 
 export default {
   name: 'AboutScreen',
   components: { ProfileComponent },
 
   async setup() {
-    definePageMeta({
-      layout: 'about',
-      pageTransition: 'image',
-    })
+    if (typeof definePageMeta !== 'undefined') {
+      definePageMeta({
+        layout: 'about'
+      })
+    }
     const showProfileComponent = ref(true) // Control the rendering of ProfileComponent
 
     function toggleProfileComponent() {
@@ -51,8 +51,8 @@ export default {
       users: usersStore.usersApp || [],
       loadingUser: usersStore.loadingUser,
       errorUser: usersStore.errorUser,
-      showInfo,
+      showInfo
     }
-  },
+  }
 }
 </script>

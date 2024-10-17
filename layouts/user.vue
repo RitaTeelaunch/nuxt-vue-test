@@ -12,6 +12,6 @@ export default {
   name: 'UserId',
   setup() {
     return { styles }
-  },
+  }
 }
 </script>

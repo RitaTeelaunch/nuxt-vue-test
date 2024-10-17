@@ -9,7 +9,7 @@ $ npm install
 # serve with hot reload at localhost:3000
 $ npm run dev
 
-# build for production and launch server
+# build for production and launch store
 $ npm run build
 $ npm run start
 
@@ -42,7 +42,7 @@ More information about the usage of this directory in [the documentation](https:
 
 ### `plugins`
 
-The plugins directory contains TypeScript plugins that you want to run before instantiating the root Vue.ts Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
+The plugins directory contains TypeScript plugins that you want to run before instantiating the root Vue.ts Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.mjs`.
 
 More information about the usage of this directory in [the documentation](https://nuxt.com/docs/guide/directory-structure/plugins).
 
@@ -61,18 +61,18 @@ Example:
 More information about the usage of this directory in [the documentation](https://nuxt.com/docs/guide/directory-structure/public).
 
 
-### `server`
-
-This directory contains your pinia store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxt.com/docs/guide/directory-structure/server).
-
-
 ### `src`
 
 The src directory contains your components and your types (declarations). Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
 
 More information about the usage of this directory in [the documentation](https://nuxt.com/docs/guide/directory-structure/components).
+
+
+### `store`
+
+This directory contains your pinia store files. Creating a file in this directory automatically activates Vuex.
+
+More information about the usage of this directory in [the documentation](https://nuxt.com/docs/guide/directory-structure/server).
 
 
 ### `app.vue`
@@ -81,3 +81,9 @@ The app.vue contain your Vue.ts components. Components make up the different par
 
 More information about the usage of this directory in [the documentation](https://nuxt.com/docs/guide/directory-structure/app)
 
+
+### `eslint.config.mjs`
+
+The eslint contain your rules of warning and error.
+
+More information about the usage of this directory in [the documentation](https://eslint.nuxt.com/packages/config)

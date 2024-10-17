@@ -12,7 +12,7 @@ export default {
   name: 'Default',
   setup() {
     return { styles }
-  },
+  }
 }
 </script>
 

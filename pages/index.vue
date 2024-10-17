@@ -5,7 +5,7 @@
       section="Bag Section"
       description="Customized your own bag design!!!!"
       :return-about="returnAbout"
-      :opel-login-modal="opelLoginModal"
+      :open-login-modal="openLoginModal"
       :is-content-visible="isContentVisible"
       :msg="msg"
       :login="login"
@@ -23,12 +23,12 @@ import ImageComponent from '~/src/components/imageComponent/ImageComponent.vue'
 export default {
   name: 'IndexPage', // screen name
   components: {
-    ImageComponent, // set import component name
+    ImageComponent // set import component name
   },
 
   setup() {
     definePageMeta({
-      layout: 'header', // to make layout for this screen
+      layout: 'header' // to make layout for this screen
     })
     const router = useRouter()
     // Define refs for message and visibility state
@@ -37,19 +37,19 @@ export default {
     // Form data
     const form = reactive({
       username: '',
-      password: '',
+      password: ''
     })
 
-    const opelLoginModal = () => {
+    const openLoginModal = () => {
       msg.value = 'Login Form'
-      isContentVisible.value = !isContentVisible.value
+      isContentVisible.value = true
       form.username = ''
       form.password = ''
     }
 
-    const login = (values: string) => {
-      console.log('Success:', values)
+    const login = () => {
       isContentVisible.value = false
+      router.push('/users')
     }
 
     const cancel = () => {
@@ -65,11 +65,11 @@ export default {
       isContentVisible,
       msg,
       form,
-      opelLoginModal,
+      openLoginModal,
       login,
       cancel,
-      returnAbout,
+      returnAbout
     }
-  },
+  }
 }
 </script>

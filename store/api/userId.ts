@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import { useRoute } from 'vue-router'
+
 export interface users {
   id: number
   name: string
@@ -11,7 +12,7 @@ export const useUserIdStore = defineStore('userIdStore', {
   state: () => ({
     userId: Object as users,
     loadingUserId: false as boolean,
-    errorUserId: null as string | null,
+    errorUserId: null as string | null
   }),
   actions: {
     async fetchUserId() {
@@ -21,11 +22,9 @@ export const useUserIdStore = defineStore('userIdStore', {
         const id = useRoute().params.id
 
         const response = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
-        console.log('API Response:', response.data)
         this.userId = response.data
       } catch (err) {
-        console.log(err)
-        this.errorUserId = 'Failed to fetch user id'
+        this.errorUserId = `Failed to fetch user id ${err}`
       } finally {
         this.loadingUserId = false
       }
@@ -35,11 +34,11 @@ export const useUserIdStore = defineStore('userIdStore', {
     },
     decrementUser() {
       this.userId.id--
-    },
+    }
   },
   getters: {
     getUserId: (state) => state.userId,
     isLoading: (state) => state.loadingUserId,
-    hasError: (state) => state.errorUserId,
-  },
+    hasError: (state) => state.errorUserId
+  }
 })

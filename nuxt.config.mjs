@@ -7,24 +7,24 @@ export default defineNuxtConfig({
     head: {
       title: 'nuxt-vue-test',
       htmlAttrs: {
-        lang: 'en',
+        lang: 'en'
       },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { hid: 'description', name: 'description', content: '' },
-        { name: 'format-detection', content: 'telephone=no' },
+        { name: 'format-detection', content: 'telephone=no' }
       ],
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
     },
     pageTransition: {
       name: 'fade-slide',
-      mode: 'out-in',
+      mode: 'out-in'
     },
     layoutTransition: {
       name: 'layout-slide',
-      mode: 'out-in',
-    },
+      mode: 'out-in'
+    }
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   css: [
     '@/public/assets/fonts/fonts.css', // to import font
     '@/public/assets/transition/main.css', // for transition
-    '@/public/assets/styles/antd.css', // for override antd
+    '@/public/assets/styles/antd.css' // for override antd
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -46,20 +46,20 @@ export default defineNuxtConfig({
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
+    '@nuxt/typescript-build'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxt/eslint', '@pinia/nuxt'],
+  modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxt/test-utils/module'],
 
   // for prettier
   eslint: {
     config: {
       stylistic: true,
       checker: {
-        configType: 'eslint.config',
-      },
-    },
+        configType: 'eslint.config'
+      }
+    }
   },
 
   // Enable SSR globally
@@ -69,9 +69,5 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  router: {
-    middleware: ['logger'],
-  },
-
-  compatibilityDate: '2024-09-27',
+  compatibilityDate: '2024-09-27'
 })

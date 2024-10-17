@@ -13,8 +13,8 @@ export default {
   name: 'HeaderLayout',
   data() {
     return {
-      styles,
+      styles
     }
-  },
+  }
 }
 </script>

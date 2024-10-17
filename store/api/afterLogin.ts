@@ -1,12 +1,13 @@
-// server/users.ts
+// store/users.ts
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import type { users } from '~/store/api/userId'
 
 export const useUsersStore = defineStore('userStore', {
   state: () => ({
-    users: [] as Array<any>, // Array of users
+    users: [] as Array<users>,
     loading: false as boolean,
-    error: null as string | null,
+    error: null as string | null
   }),
   actions: {
     async fetchUsers() {
@@ -14,18 +15,17 @@ export const useUsersStore = defineStore('userStore', {
       this.error = null
       try {
         const response = await axios.get('https://jsonplaceholder.typicode.com/users')
-        console.log('API Response:', response.data)
         this.users = response.data
       } catch (err) {
         this.error = err
       } finally {
         this.loading = false
       }
-    },
+    }
   },
   getters: {
     getUsers: (state) => state.users,
     isLoading: (state) => state.loading,
-    hasError: (state) => state.error,
-  },
+    hasError: (state) => state.error
+  }
 })

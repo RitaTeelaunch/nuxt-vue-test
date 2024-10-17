@@ -12,7 +12,7 @@
           </div>
           <div v-if="productList" :class="styles.subContainer">
             <div v-for="item in productList" :key="item.id" :class="styles.detail">
-              <img :src="item.book_image" :alt="item.book_image" :class="styles.img" >
+              <img :src="item.book_image" :alt="item.book_image" :class="styles.img" />
               <p>{{ item.rank }}</p>
               <p :class="styles.text">{{ item.title }}</p>
               <p :class="styles.text">{{ item.author }}</p>
@@ -27,17 +27,20 @@
     </transition>
   </div>
 </template>
+
 <script lang="ts">
 import type { PropType } from 'vue'
+import { ref, onMounted } from 'vue'
 import styles from './ProductComponent.module.css?module'
+
 export default {
   name: 'ProductComponent',
   layout: 'header',
   props: {
     productList: {
       type: Array as PropType<{ rank: number; title: string; book_image: string; author: string }[]>,
-      required: this,
-    },
+      required: this
+    }
   },
   setup() {
     const isAnimated = ref(false)
@@ -45,11 +48,11 @@ export default {
       isAnimated.value = true
     })
     return {
-      isAnimated,
+      isAnimated
     }
   },
   data() {
     return { styles }
-  },
+  }
 }
 </script>

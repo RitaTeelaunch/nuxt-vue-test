@@ -7,17 +7,17 @@ import eslintConfigPrettier from 'eslint-config-prettier'
 export default createConfigForNuxt({
   features: {
     stylistic: true,
-    tooling: true,
-  },
+    tooling: true
+  }
 })
   .prepend({
     languageOptions: {
       globals: {
         defineNuxtConfig: 'readonly',
         NodeJS: 'readonly',
-        vueIndentScriptAndStyle: true, // for prettier
-      },
-    },
+        vueIndentScriptAndStyle: true // for prettier
+      }
+    }
   })
   // Override some rules in a specific config, based on their name
   .override('nuxt/typescript/rules', {
@@ -46,8 +46,8 @@ export default createConfigForNuxt({
       'space-infix-ops': ['warn', { int32Hint: false }],
       '@typescript-eslint/no-unused-expressions': 'error',
       '@typescript-eslint/ban-types': 'off',
-      'vue/no-unused-vars': 'error',
-    },
+      'vue/no-unused-vars': 'error'
+    }
   })
   // Stylistic rules
   .override('nuxt/stylistic', {
@@ -56,15 +56,18 @@ export default createConfigForNuxt({
       '@stylistic/indent-binary-ops': 'off',
       '@stylistic/max-statements-per-line': 'off',
       '@stylistic/operator-linebreak': 'off',
-      '@stylistic/quote-props': ['error', 'consistent'],
+      // '@stylistic/quote-props': ['error', 'consistent'],
+      '@stylistic/quote-props': 'off',
       '@stylistic/space-before-function-paren': 'off',
       '@stylistic/arrow-parens': 'off',
       '@stylistic/max-attributes-per-line': 'off',
       '@stylistic/member-delimiter-style': 'off',
       'vue/singleline-html-element-content-newline': 'off',
       'vue/max-attributes-per-line': 'off',
-      'vue/ html-indent': 'off',
-    },
+      'vue/html-indent': 'off',
+      '@stylistic/comma-dangle': ['error', 'never'],
+      'vue/comma-dangle': 'off'
+    }
   })
   .append({
     files: ['**/*.vue', '**/*.ts'],
@@ -73,11 +76,12 @@ export default createConfigForNuxt({
       'simple-import-sort': simpleImportSort,
       spellcheck,
       vue,
-      'eslint-config-prettier': eslintConfigPrettier,
+      'eslint-config-prettier': eslintConfigPrettier
     },
     rules: {
       'spellcheck/spell-checker': 'off', // for warning under axios;
       'simple-import-sort/imports': 'off', // for import;
       'simple-import-sort/exports': 'warn',
-    },
+      'vue/html-self-closing': 'off'
+    }
   })

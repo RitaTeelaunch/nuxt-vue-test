@@ -21,9 +21,9 @@ import { useAsyncData } from 'nuxt/app'
 import { ref } from 'vue'
 
 import ProfileComponent from '../src/components/profileComponent/ProfileComponent.vue'
-import { useUsersStore } from '~/server/api/rita'
+import { useUsersStore } from '~/store/api/afterLogin'
 
-// Import the server
+// Import the store
 export default {
   name: 'AboutScreen',
   components: { ProfileComponent },
@@ -33,16 +33,15 @@ export default {
       showProfileComponent.value = !showProfileComponent.value
     }
 
-    const usersStore = useUsersStore() // Use the server
+    const usersStore = useUsersStore() // Use the store
 
-    // Using useAsyncData with fetchUsers action from the Pinia server
+    // Using useAsyncData with fetchUsers action from the Pinia store
     await useAsyncData('users', async () => {
       await usersStore.fetchUsers() // Call the action to fetch users
-      return usersStore.users // Return the users data from the server
+      return usersStore.users // Return the users data from the store
     })
 
     const showInfo = (id: number) => {
-      console.log('id', id)
       router.push(`/user/${id}`)
     }
 
@@ -53,9 +52,9 @@ export default {
       fetchUsers: usersStore.fetchUsers,
       loadingUser: usersStore.loadingUser,
       errorUser: usersStore.errorUser,
-      showInfo,
+      showInfo
     }
-  },
+  }
 }
 </script>
 

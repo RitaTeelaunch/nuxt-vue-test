@@ -30,10 +30,19 @@
         <p>for counter</p>
         <div style="display: flex; flex-direction: row; gap: 20px">
           <p>Counter: {{ count }}</p>
-          <p style="color: cadetblue" @click="newCount">Update</p>
+          <p style="color: cadetblue" data-testid="update" @click="newCount">Update</p>
         </div>
-        <a-button style="margin-right: 20px; border-radius: 50px; color: cadetblue" @click="increment"> + </a-button>
-        <a-button style="border-radius: 50px; color: cadetblue" :disabled="count <= 1" @click="decrement"> - </a-button>
+        <a-button style="margin-right: 20px; border-radius: 50px; color: cadetblue" data-testid="+" @click="increment">
+          +
+        </a-button>
+        <a-button
+          style="border-radius: 50px; color: cadetblue"
+          :disabled="count <= 1"
+          data-testid="-"
+          @click="decrement"
+        >
+          -
+        </a-button>
       </div>
     </div>
     <div style="display: flex; justify-content: center">
@@ -45,13 +54,13 @@
 <script lang="ts">
 import { useRouter, useState } from 'nuxt/app'
 import { definePageMeta } from '../../.nuxt/imports'
-import { useUserIdStore } from '~/server/api/userId'
+import { useUserIdStore } from '~/store/api/userId'
 
 export default {
   name: 'PostPage',
   async setup() {
     definePageMeta({
-      layout: 'user',
+      layout: 'user'
     })
     const router = useRouter()
     const count = useState('counter', () => 1)
@@ -70,6 +79,7 @@ export default {
     }
 
     const newUser = () => {
+      count.value = userIdStore.userId.id
       router.push(`/user/${userIdStore.userId.id}`)
     }
 
@@ -79,8 +89,8 @@ export default {
       increment,
       decrement,
       newCount,
-      newUser,
+      newUser
     }
-  },
+  }
 }
 </script>

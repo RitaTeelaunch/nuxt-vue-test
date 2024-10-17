@@ -1,11 +1,18 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 
+export interface ProductsType {
+  rank: number
+  title: string
+  book_image: string
+  author: string
+}
+
 export const useProductsStore = defineStore('productsStore', {
   state: () => ({
-    products: [] as Array<any>,
+    products: [] as Array<ProductsType>,
     loadingProduct: false as boolean,
-    errorProduct: null as string | null,
+    errorProduct: null as string | null
   }),
   actions: {
     async fetchProduct() {
@@ -14,22 +21,20 @@ export const useProductsStore = defineStore('productsStore', {
       try {
         const response = await axios.get('https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json', {
           params: {
-            'api-key': 'KAqrqFIGwGCXGrWPAPsqISj9nEwEi5rZ',
-          },
+            'api-key': 'KAqrqFIGwGCXGrWPAPsqISj9nEwEi5rZ'
+          }
         })
-        console.log('API Response:', response.data.results.books)
         this.products = response.data.results.books
       } catch (err) {
-        console.log('err', err)
-        this.errorProduct = 'Failed to fetch products'
+        this.errorProduct = `Failed to fetch products ${err}`
       } finally {
         this.loadingProduct = false
       }
-    },
+    }
   },
   getters: {
     getProducts: (state) => state.products,
     isLoading: (state) => state.loadingProduct,
-    hasError: (state) => state.errorProduct,
-  },
+    hasError: (state) => state.errorProduct
+  }
 })

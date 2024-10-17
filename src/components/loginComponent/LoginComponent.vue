@@ -1,5 +1,5 @@
 <template>
-  <a-modal :open="isContentVisible" :footer="null" :closable="false" class="customModal">
+  <a-modal v-if="isContentVisible" :open="isContentVisible" :footer="null" :closable="false" class="customModal">
     <p :class="styles.title">{{ msg }}</p>
     <p :class="styles.title" @click="click">click to show content</p>
     <transition name="image" mode="in-out">
@@ -44,8 +44,9 @@
                 :class="styles.loginButton"
                 :disabled="!localForm.username || !localForm.password"
                 @click="login"
-                >Login</a-button
               >
+                Login
+              </a-button>
               <a-button type="primary" :class="styles.loginButton" @click="cancel">Cancel</a-button>
             </div>
           </a-form-item>
@@ -54,37 +55,39 @@
     </transition>
   </a-modal>
 </template>
+
 <script lang="ts">
-import styles from './LoginComponent.module.css?module'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { ref } from 'vue'
+import styles from './LoginComponent.module.css?module'
+
 export default {
   name: 'LoginComponent',
   components: {
     UserOutlined,
-    LockOutlined,
+    LockOutlined
   },
   props: {
     isContentVisible: {
       type: Boolean,
-      required: true,
+      required: true
     },
     msg: {
       type: String,
-      required: true,
+      required: true
     },
     login: {
       type: Function,
-      required: true,
+      required: true
     },
     cancel: {
       type: Function,
-      required: true,
+      required: true
     },
     form: {
       type: Object as () => { username: string; password: string },
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const isAnimated = ref(false)
@@ -94,6 +97,6 @@ export default {
     }
 
     return { isAnimated, click, styles, localForm }
-  },
+  }
 }
 </script>

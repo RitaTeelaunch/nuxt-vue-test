@@ -11,14 +11,14 @@
     </div>
 
     <div v-if="fullName" :class="styles.tableDetails">
-      <p><strong>Id</strong></p>
-      <p><strong>Username</strong></p>
-      <p><strong>Name</strong></p>
-      <p><strong>Email</strong></p>
+      <p><strong>Id </strong></p>
+      <p><strong>Username </strong></p>
+      <p><strong>Name </strong></p>
+      <p><strong>Email </strong></p>
       <p><strong>More Information</strong></p>
     </div>
 
-    <div v-for="item in fullName" :key="item.id" :class="styles.tableDetails">
+    <div v-for="item in fullName" :key="item.id" :class="styles.tableDetails" v-bind="$attrs">
       <p>
         {{ item.id }}
       </p>
@@ -31,7 +31,7 @@
       <p>
         {{ item.email }}
       </p>
-      <a-button @click="showInfo(item.id)"> Details </a-button>
+      <a-button data-testid="buttonDetails" @click="showInfo(item.id)"> Details </a-button>
     </div>
     <div :class="styles.buttonContainer">
       <button :class="styles.showButton" @click="showAnimation">Show It</button>
@@ -52,20 +52,21 @@ export default {
   props: {
     fullName: {
       type: Array as PropType<{ id: number; name: string; username: string; email: string }[]>,
-      required: true,
+      required: true
     },
     loadingUser: {
       type: Boolean,
-      required: true,
+      required: true
     },
     errorUser: {
-      type: String,
-      required: true,
+      type: [String, null],
+      default: null,
+      required: true
     },
     showInfo: {
       type: Function,
-      required: true,
-    },
+      required: true
+    }
   },
   setup() {
     const isAnimated = ref(false)
@@ -79,13 +80,13 @@ export default {
 
     return {
       isAnimated,
-      showAnimation,
+      showAnimation
     }
   },
   data() {
     return {
-      styles,
+      styles
     }
-  },
+  }
 }
 </script>

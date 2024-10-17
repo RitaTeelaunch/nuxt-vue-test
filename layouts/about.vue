@@ -12,8 +12,8 @@ export default {
   name: 'About',
   setup() {
     return {
-      styles,
+      styles
     }
-  },
+  }
 }
 </script>

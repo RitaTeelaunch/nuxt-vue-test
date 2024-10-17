@@ -6,8 +6,8 @@
 }
 
 .title {
-  /*font-family: 'Roboto-Italic', sans-serif;*/
   font-family: 'DMSans-Regular-Bold', sans-serif;
+  /*font-family: Grandstander, sans-serif; !*call font-family from custom font in fonts.css*!*/
   font-weight: 700;
   font-size: 36px;
 }
@@ -15,7 +15,7 @@
 .subContainer {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: start;
   gap: 10px;
   flex-wrap: wrap;
   overflow: hidden;
@@ -35,10 +35,9 @@
 }
 
 .text {
-  /*font-family: 'Roboto-Italic', sans-serif;*/
   font-family: 'DMSans-Regular-Bold', sans-serif;
+  /*font-family: Grandstander, sans-serif; !*call font-family from custom font in fonts.css*!*/
   font-size: 18px;
-  /*font-weight: 300;*/
   font-weight: 400;
   color: cadetblue;
 }
@@ -79,19 +78,3 @@
   }
 }
 
-@font-face {
-  font-family: 'DMSans-Regular-Bold';
-  src: url('/public/assets/fonts/DMSans-Regular.ttf') format('ttf'),
-    url('/public/assets/fonts/DMSans-Bold.ttf') format('ttf');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Robo-Regular-Bold';
-  src: url('/public/assets/fonts/Roboto-Italic.ttf') format('ttf'),
-    url('/public/assets/fonts/Roboto-Regular.ttf') format('ttf');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}

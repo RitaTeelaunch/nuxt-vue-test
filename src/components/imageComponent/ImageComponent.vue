@@ -22,40 +22,33 @@
         <div v-if="isAnimated" :class="styles.imgContainer">
           <div :class="styles.imgContainer">
             <a-image :src="FirstImage" :alt="FirstImage" :class="styles.img" />
-            <img :src="SecondImage" :alt="SecondImage" :class="styles.img" >
+            <img :src="SecondImage" :alt="SecondImage" :class="styles.img" />
           </div>
         </div>
       </transition>
     </div>
     <div :class="styles.buttonContainer">
-      <NuxtLink to="/product" :class="styles.product"> About Product </NuxtLink>
-      <NuxtLink to="/planet" :class="styles.product"> About Planet </NuxtLink>
-      <a-button type="link" :class="styles.aboutButton" @click="returnAbout"> About us </a-button>
+      <NuxtLink to="/product" :class="styles.product" data-testid="productLink"> About Product </NuxtLink>
+      <NuxtLink to="/planet" :class="styles.product" data-testid="planetLink"> About Planet </NuxtLink>
+      <a-button type="link" :class="styles.aboutButton" data-testid="aboutUs" @click="returnAbout"> About us </a-button>
     </div>
     <div :class="styles.user">
-      <a-button
-        type="primary"
-        size="large"
-        shape="round"
-        icon="user"
-        :class="styles.aboutButton"
-        @click="opelLoginModal"
-      >
+      <a-button type="primary" size="large" shape="round" icon="" :class="styles.aboutButton" @click="openLoginModal">
         User
       </a-button>
-      <LoginComponent :is-content-visible="isContentVisible" :msg="msg" :login="login" :cancel="cancel" :form="form" />
     </div>
+    <LoginComponent :is-content-visible="isContentVisible" :msg="msg" :login="login" :cancel="cancel" :form="form" />
   </div>
 </template>
 
 <script lang="ts">
 import type { PropType } from 'vue'
 import { onMounted, ref } from 'vue'
+import FirstImage from '../../../public/assets/Receiver.png'
+import SecondImage from '../../../public/assets/Receiver.svg'
+import LoginComponent from '../loginComponent/LoginComponent.vue'
 import styles from './ImageComponent.module.css?module'
-import FirstImage from '~/public/assets/Receiver.png'
-import SecondImage from '~/public/assets/Receiver.svg'
 import type { ImageComponentType } from '~/src/components/imageComponent/ImageComponent.type'
-import LoginComponent from '~/src/components/loginComponent/LoginComponent.vue'
 
 export default {
   name: 'ImageComponent', // component name
@@ -63,54 +56,40 @@ export default {
   props: {
     title: {
       type: String as PropType<ImageComponentType['title']>,
-      required: true,
+      required: true
     },
     section: {
       type: String as PropType<ImageComponentType['section']>,
-      required: true,
+      required: true
     },
     description: {
       type: String as PropType<ImageComponentType['description']>,
-      required: true,
+      required: true
     },
     returnAbout: { type: Function, required: true },
-    opelLoginModal: { type: Function, required: true },
+    openLoginModal: { type: Function, required: true },
     isContentVisible: {
       type: Boolean,
-      required: true,
+      required: true
     },
     msg: {
       type: String,
-      required: true,
+      required: true
     },
     login: {
       type: Function,
-      required: true,
+      required: true
     },
     cancel: {
       type: Function,
-      required: true,
+      required: true
     },
     form: {
       type: Object as () => { username: string; password: string },
-      required: true,
-    },
+      required: true
+    }
   },
   setup() {
-    // definePageMeta({
-    //   pageTransition: {
-    //     name: 'image',
-    //     mode: 'out-in',
-    //   },
-    // })
-    // is a compiler-hint helper that is only usable inside the script block of a single file component which is also a page
-    // definePageMeta({
-    //   pageTransition: {
-    //     name: 'fade-slide',
-    //     mode: 'in-out',
-    //   },
-    // })
-
     const isAnimated = ref(false)
     onMounted(() => {
       isAnimated.value = !isAnimated.value
@@ -120,8 +99,8 @@ export default {
       FirstImage,
       SecondImage,
       styles,
-      isAnimated,
+      isAnimated
     }
-  },
+  }
 }
 </script>

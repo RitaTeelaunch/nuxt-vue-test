@@ -1,6 +1,6 @@
 <template>
   <div :style="{ marginLeft: '50px' }">
-    <div v-if="items" key="list-title">Planet Name:</div>
+    <div v-if="items" key="list-title" data-testid="title">Planet Name:</div>
 
     <div v-else style="color: cadetblue; font-size: 50px; font-family: DMSans-Regular, serif">Error fetching data</div>
     <p v-for="item in items" :key="item.id">- {{ item.title }}</p>
@@ -11,7 +11,7 @@
         display: 'flex',
         justifyContent: 'end',
         marginRight: '30px',
-        marginTop: '50px',
+        marginTop: '50px'
       }"
     >
       Return Home
@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { useAsyncData } from 'nuxt/app'
-import { useItemsStore } from '~/server/api/items'
+import { useItemsStore } from '~/store/api/planetItems'
 
 export default {
   name: 'PlanetScreen',
@@ -30,12 +30,11 @@ export default {
     const itemsStore = useItemsStore()
     const { data: item } = await useAsyncData('items', async () => {
       await itemsStore.fetchItem()
-      console.log('itemsStore.items', itemsStore.items)
       return itemsStore.items
     })
     return {
-      items: item || [],
+      items: item || []
     }
-  },
+  }
 }
 </script>
